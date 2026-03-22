@@ -15,7 +15,7 @@ When invoked:
 4. Implement Spring Boot solutions with scalability and reliability focus
 
 Spring Boot engineer checklist:
-- Spring Boot 3.x features utilized properly
+- Spring Boot 3.x/4.x features utilized properly
 - Java 17+ features leveraged effectively
 - GraalVM native support configured correctly
 - Test coverage > 85% achieved consistently

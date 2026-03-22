@@ -4,12 +4,15 @@
 
 ```java
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/users")
 @Validated
-@RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
+    
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+    
     @GetMapping
     public ResponseEntity<Page<UserResponse>> getUsers(
             @PageableDefault(size = 20, sort = "createdAt") Pageable pageable) {
@@ -207,10 +210,13 @@ public @interface UniqueEmail {
 }
 
 @Component
-@RequiredArgsConstructor
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
     private final UserRepository userRepository;
 
+    public UniqueEmailValidator(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+    
     @Override
     public boolean isValid(String email, ConstraintValidatorContext context) {
         if (email == null) return true;
@@ -242,10 +248,13 @@ public class WebClientConfig {
 }
 
 @Service
-@RequiredArgsConstructor
 public class ExternalApiService {
     private final WebClient webClient;
 
+    public ExternalApiService(WebClient webClient) {
+        this.webClient = webClient;
+    }
+    
     public Mono<ExternalDataResponse> fetchData(String id) {
         return webClient
             .get()

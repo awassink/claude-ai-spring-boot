@@ -20,7 +20,7 @@ src/main/java/com/example/
     └── rest/           # REST controllers
 ```
 
-## Modern pom.xml (Spring Boot 3.2)
+## Modern pom.xml (Spring Boot 4.0)
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -30,7 +30,7 @@ src/main/java/com/example/
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.1</version>
+        <version>4.0.3</version>
     </parent>
 
     <groupId>com.example</groupId>
@@ -41,7 +41,7 @@ src/main/java/com/example/
     <properties>
         <java.version>21</java.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
-        <testcontainers.version>1.19.3</testcontainers.version>
+        <testcontainers.version>2.0.3</testcontainers.version>
     </properties>
 
     <dependencies>
@@ -83,8 +83,13 @@ src/main/java/com/example/
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>org.testcontainers</groupId>
-            <artifactId>postgresql</artifactId>
+            <artifactId>testcontainers-postgresql</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

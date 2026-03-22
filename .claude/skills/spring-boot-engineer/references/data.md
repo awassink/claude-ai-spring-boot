@@ -130,10 +130,13 @@ public class UserSpecifications {
 
 // Usage in service
 @Service
-@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
 
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+    
     public Page<User> searchUsers(UserSearchCriteria criteria, Pageable pageable) {
         Specification<User> spec = Specification
             .where(UserSpecifications.hasEmail(criteria.email()))
@@ -149,7 +152,6 @@ public class UserService {
 
 ```java
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class OrderService {
     private final OrderRepository orderRepository;
@@ -157,6 +159,13 @@ public class OrderService {
     private final InventoryService inventoryService;
     private final NotificationService notificationService;
 
+    public OrderService(OrderRepository orderRepository, PaymentService paymentService, InventoryService inventoryService, NotificationService notificationService) {
+        this.orderRepository = orderRepository;
+        this.paymentService = paymentService;
+        this.inventoryService = inventoryService;
+        this.notificationService = notificationService;
+    }
+    
     @Transactional
     public Order createOrder(OrderCreateRequest request) {
         // All operations in single transaction
