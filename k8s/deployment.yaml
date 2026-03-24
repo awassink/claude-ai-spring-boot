@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: claude-ai-spring-boot
+  labels:
+    app: claude-ai-spring-boot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: claude-ai-spring-boot
+  template:
+    metadata:
+      labels:
+        app: claude-ai-spring-boot
+    spec:
+      containers:
+        - name: app
+          image: claude-ai-spring-boot:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: claude-ai-spring-boot-config
+            - secretRef:
+                name: claude-ai-spring-boot-secret
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"

@@ -1,0 +1,55 @@
+{
+  "id": "drivers",
+  "realm": "drivers",
+  "displayName": "Drivers Realm",
+  "enabled": true,
+  "sslRequired": "none",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": false,
+  "editUsernameAllowed": false,
+  "bruteForceProtected": true,
+  "roles": {
+    "realm": [
+      {
+        "name": "driver-manager",
+        "description": "Can manage drivers",
+        "composite": false,
+        "clientRole": false
+      }
+    ]
+  },
+  "clients": [
+    {
+      "clientId": "drivers-client",
+      "name": "Drivers API Client",
+      "enabled": true,
+      "clientAuthenticatorType": "client-secret",
+      "secret": "drivers-secret",
+      "serviceAccountsEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "roles",
+        "profile",
+        "basic",
+        "email"
+      ]
+    }
+  ],
+  "users": [
+    {
+      "username": "service-account-drivers-client",
+      "enabled": true,
+      "serviceAccountClientId": "drivers-client",
+      "realmRoles": ["driver-manager"],
+      "clientRoles": {}
+    }
+  ]
+}

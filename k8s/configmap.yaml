@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: claude-ai-spring-boot-config
+  labels:
+    app: claude-ai-spring-boot
+data:
+  DATABASE_URL: "jdbc:postgresql://postgres-service:5432/driversdb"
+  DATABASE_USERNAME: "drivers"
+  KEYCLOAK_ISSUER_URI: "http://keycloak-service:8180/realms/drivers"
