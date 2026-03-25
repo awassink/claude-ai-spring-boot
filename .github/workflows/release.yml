@@ -9,6 +9,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   SONAR_PROJECT_KEY: awassink_claude-ai-spring-boot
+  SONAR_ORGANIZATION: awassink
   SONAR_HOST_URL: https://sonarcloud.io
 
 jobs:
@@ -37,6 +38,7 @@ jobs:
         run: |
           mvn --batch-mode sonar:sonar \
             -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.organization=${{ env.SONAR_ORGANIZATION }} \
             -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
             -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
