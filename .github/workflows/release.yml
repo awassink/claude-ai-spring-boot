@@ -8,6 +8,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
+  SONAR_PROJECT_KEY: awassink_claude-ai-spring-boot
+  SONAR_HOST_URL: https://sonarcloud.io
 
 jobs:
   build-and-release:
@@ -30,6 +32,20 @@ jobs:
 
       - name: Build and run tests
         run: mvn --batch-mode verify
+
+      - name: SonarQube analysis
+        run: |
+          mvn --batch-mode sonar:sonar \
+            -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }} \
+            -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+
+      - name: SonarQube quality gate
+        uses: SonarSource/sonarqube-quality-gate-action@v1
+        timeout-minutes: 5
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
 
       - name: Upload test reports
         uses: actions/upload-artifact@v6
