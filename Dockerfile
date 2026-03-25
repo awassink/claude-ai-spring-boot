@@ -1,13 +1,8 @@
-# Stage 1: Build
-FROM maven:3.9-eclipse-temurin-21-alpine AS builder
+# Stage 1: Unpack layered jar
+FROM eclipse-temurin:21-jre-alpine AS builder
 WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline -B -q
-COPY src ./src
-RUN mvn -B -q package -DskipTests
-
-# Unpack layered jar
-RUN java -Djarmode=layertools -jar target/claude-ai-spring-boot-*.jar extract
+COPY target/claude-ai-spring-boot-*.jar app.jar
+RUN java -Djarmode=layertools -jar app.jar extract
 
 # Stage 2: Runtime
 FROM eclipse-temurin:21-jre-alpine
