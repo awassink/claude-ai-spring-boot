@@ -3,6 +3,7 @@
     "allow": [
       "Bash(mvn:*)",
       "Bash(ls:*)",
+      "Bash(tree:*)",
       "Bash(jar tf:*)",
       "Bash(java:*)",
       "Bash(curl -s https://repo1.maven.org/maven2/org/springframework/boot/spring-boot-starter-parent/maven-metadata.xml)",
@@ -12,7 +13,8 @@
       "Bash(docker-compose up:*)",
       "Bash(docker ps:*)",
       "Bash(docker exec:*)",
-      "Bash(docker-compose down:*)"
+      "Bash(docker-compose down:*)",
+      "WebSearch"
     ]
   }
 }
