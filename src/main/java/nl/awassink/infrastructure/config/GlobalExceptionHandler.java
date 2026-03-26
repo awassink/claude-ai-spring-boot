@@ -12,17 +12,19 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static final String TIMESTAMP = "timestamp";
+
     @ExceptionHandler(NoSuchElementException.class)
     public ProblemDetail handleNotFound(NoSuchElementException ex) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-        problem.setProperty("timestamp", Instant.now());
+        problem.setProperty(TIMESTAMP, Instant.now());
         return problem;
     }
 
     @ExceptionHandler(IllegalStateException.class)
     public ProblemDetail handleConflict(IllegalStateException ex) {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, ex.getMessage());
-        problem.setProperty("timestamp", Instant.now());
+        problem.setProperty(TIMESTAMP, Instant.now());
         return problem;
     }
 
@@ -31,7 +33,7 @@ public class GlobalExceptionHandler {
         ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed");
         problem.setProperty("errors", ex.getBindingResult().getFieldErrors()
             .stream().map(e -> e.getField() + ": " + e.getDefaultMessage()).toList());
-        problem.setProperty("timestamp", Instant.now());
+        problem.setProperty(TIMESTAMP, Instant.now());
         return problem;
     }
 }
