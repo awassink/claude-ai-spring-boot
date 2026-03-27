@@ -59,10 +59,6 @@ public class Driver {
     @LastModifiedDate
     @Column(name = "updated_at")
     private Instant updatedAt;
-
-    public Driver() {
-    }
-
     public UUID getId() { return id; }
     public void setId(UUID id) { this.id = id; }
 
