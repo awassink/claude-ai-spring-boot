@@ -16,7 +16,8 @@
       "Bash(docker-compose down:*)",
       "WebSearch",
       "WebFetch(domain:sonarcloud.io)",
-      "WebFetch(domain:medium.com)"
+      "WebFetch(domain:medium.com)",
+      "WebFetch(domain:github.com)"
     ]
   }
 }
