@@ -94,7 +94,7 @@ Uses the [OWASP Dependency-Check plugin](https://jeremylong.github.io/Dependency
 
 #### Prerequisites — NVD API key
 
-Since version 8.0, OWASP Dependency-Check requires an NVD API key for fast database updates (otherwise it falls back to a severely rate-limited mode — up to 2 hours for the first run).
+Since version 8.0, OWASP Dependency-Check requires an NVD API key to initialize its local H2 database. **The scan cannot run at all without it** — even in OSS Index-only mode, the local database schema must be populated first. Without a key the NVD API returns 403 and the plugin aborts with `NoDataException: No documents exist`.
 
 1. Register for free at https://nvd.nist.gov/developers/request-an-api-key
 2. Pass the key at scan time or store it in `~/.m2/settings.xml`:
@@ -250,4 +250,4 @@ Store `nvd.api.key` in CI secrets and pass it as `-Dnvd.api.key=$NVD_API_KEY`. D
 - **CVE findings are ordered by CVSS score** — address Critical and High before any release.
 - **Never suppress a CVE without a `<notes>` element** documenting why it is safe to suppress.
 - **A CVE in a transitive dep is still your problem** — upgrade the direct dependency that pulls it in, or exclude and re-declare the transitive dep at a patched version.
-- **The NVD API key is required** for fast scans (version 8+); without it the first run can take hours. Store it as a CI secret, never in `pom.xml`.
+- **The NVD API key is required** — without it the plugin cannot initialize its local database and aborts with `NoDataException`. Get a free key at https://nvd.nist.gov/developers/request-an-api-key. Store it in `~/.m2/settings.xml` locally and as a CI secret in pipelines. Never hardcode it in `pom.xml`.
