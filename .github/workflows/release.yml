@@ -36,6 +36,21 @@ jobs:
       - name: Build and run tests
         run: mvn --batch-mode verify
 
+      - name: OWASP Dependency-Check
+        run: |
+          mvn --batch-mode org.owasp:dependency-check-maven:12.1.3:check \
+            -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/ \
+            -DfailBuildOnCVSS=9 \
+            -DskipTestScope=true
+
+      - name: Upload dependency-check report
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: dependency-check-report
+          path: target/dependency-check-report.html
+          retention-days: 7
+
       - name: SonarQube analysis
         run: |
           mvn --batch-mode sonar:sonar \
