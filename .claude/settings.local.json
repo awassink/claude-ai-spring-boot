@@ -14,7 +14,8 @@
       "Bash(docker ps:*)",
       "Bash(docker exec:*)",
       "Bash(docker-compose down:*)",
-      "WebSearch"
+      "WebSearch",
+      "WebFetch(domain:sonarcloud.io)"
     ]
   }
 }
