@@ -27,7 +27,7 @@ Each skill folder contains:
 | [concurrency-review](concurrency-review/) | Thread safety, race conditions, @Async, Virtual Threads |
 | [performance-smell-detection](performance-smell-detection/) | Code-level performance smells (streams, boxing, regex) |
 | [test-quality](test-quality/) | JUnit 5 + AssertJ testing patterns |
-| [maven-dependency-audit](maven-dependency-audit/) | Audit dependencies for updates and vulnerabilities |
+| [maven-dependency-management](maven-dependency-management/) | Audit dependencies and plugins for outdated versions and unused declarations |
 | [security-audit](security-audit/) | OWASP Top 10, input validation, injection prevention |
 
 ### Architecture & Design
