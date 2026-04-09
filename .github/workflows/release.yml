@@ -33,8 +33,34 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Cache Testcontainers images
+        id: tc-cache
+        uses: actions/cache@v4
+        with:
+          path: /tmp/tc-images
+          key: tc-images-postgres-16-alpine-ryuk-0.12.0
+
+      - name: Load cached Testcontainers images
+        if: steps.tc-cache.outputs.cache-hit == 'true'
+        run: |
+          docker load < /tmp/tc-images/postgres-16-alpine.tar
+          docker load < /tmp/tc-images/ryuk-0.12.0.tar
+
       - name: Build and run tests
         run: mvn --batch-mode verify
+
+      - name: Save Testcontainers images to cache
+        if: steps.tc-cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p /tmp/tc-images
+          docker save postgres:16-alpine > /tmp/tc-images/postgres-16-alpine.tar
+          docker save testcontainers/ryuk:0.12.0 > /tmp/tc-images/ryuk-0.12.0.tar
 
       - name: OWASP Dependency-Check
         run: |
